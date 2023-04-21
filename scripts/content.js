@@ -1,26 +1,3 @@
-// // document.addEventListener('DOMContentLoaded', () => {
-// //     console.log('hello');
-// // const image=document.createElement('img');
-// // image.setAttribute('src','Will.png');
-// // document.querySelector('body').appendChild(image);
-// // image.style.position='sticky';
-// // image.style.top='0';
-// // })
-// console.log('hello');
-// // const image=document.createElement('img');
-// // image.setAttribute('src','Will.png');
-// // document.querySelector('body').appendChild(image);
-// // image.style.position='sticky';
-// // image.style.top='0';
-// chrome.browserAction.onload.addListener(function(tab) {
-
-//     chrome.tabs.executeScript({
-
-// code:`console.log('hello'); const image=document.createElement('img');
-// image.setAttribute('src','images/Will.png');
-// document.querySelector('body').appendChild(image);
-
-// image.style.top='0';`
 
 //     });
 //     window.addEventListener('mousewheel',myHandler,{passive:true});
@@ -42,10 +19,11 @@
 // img.style.top = '0';
 // img.style.zIndex = '9999';
 
-// document.body.appendChild(img);
+document.body.appendChild(img);
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.executeScript({
         code: `
+        console.log(document.getElementById("pages-list").childElementCount);
             const image=document.createElement('img');
             image.setAttribute('src','images/Will.png');
             document.querySelector('body').appendChild(image);
@@ -54,6 +32,29 @@ chrome.browserAction.onClicked.addListener(function(tab) {
             image.style.right = '0';
         `
     });
+
+    chrome.tabs.query({},function(tabs){
+        let tabcount=tabs.length;
+        console.log('number of tabs:'+tabs.length);
+        if(tabcount>5){
+            chrome.tabs.executeScript({
+                code:`
+                const oldImg = document.querySelector('img[src="images/Will.png"]');
+                if (oldImg) {
+                    oldImg.remove();
+                }
+                const newimg=document.createElement('img');
+                newimg.setAttribute('src','images/newWill.jpg');
+                document.querySelector('body').appendChild(newimg);
+                newimg.style.position = 'fixed';
+                newimg.style.top = '0';
+                newimg.style.right = '0'; `            }, function(result) {
+                    if (chrome.runtime.lastError) {
+                        console.error(chrome.runtime.lastError);
+                    }
+            })
+        }
+        })
 
     window.addEventListener('mousewheel', myHandler, { passive: true });
     window.addEventListener('touchstart', myHandler, { passive: true });
@@ -68,3 +69,4 @@ function myHandler(event) {
         document.body.scrollTop -= 50;
     }
 }
+
