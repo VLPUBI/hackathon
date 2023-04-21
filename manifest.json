@@ -1,0 +1,33 @@
+{
+      "manifest_version": 3,
+  "name": "Will is Watching",
+  "description": "A fun reminder of your Codesmith obligations",
+  "version": "1.0",
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "hello.html",
+    "default_icon": "images/Will.png"
+  },
+  "background": {
+    "scripts": ["scripts/content.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": [
+        "https://www.google.com/"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "images/Will.png" ],
+      "matches": [ "https://www.google.com/" ]
+    }
+  ]
+}
+
+
