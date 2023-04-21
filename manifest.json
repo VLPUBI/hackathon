@@ -10,24 +10,18 @@
     "default_popup": "hello.html",
     "default_icon": "images/Will.png"
   },
-  "background": {
-    "scripts": ["scripts/content.js"],
-    "persistent": false
-  },
+
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
-      "matches": [
-        "https://www.google.com/"
-      ]
+      "matches": ["<all_urls>"],
+      "run_at":"document_idle"
     }
   ],
-  "web_accessible_resources": [
-    {
-      "resources": [ "images/Will.png" ],
-      "matches": [ "https://www.google.com/" ]
-    }
-  ]
+  "web_accessible_resources":[{
+    "resources":["images/Will.png"],
+    "matches":["<all_urls>"]
+  }]
 }
 
 
